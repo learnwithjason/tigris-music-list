@@ -2,51 +2,40 @@ import type { V2_MetaFunction } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import { getArtists } from 'db/get-artists.server';
 import styles from '../styles/main.css';
-import { useState } from 'react';
 
 function slugify(str: string) {
-	return str;
-	// return str.trim().replace(/\W+/g, '-').replace(/^-|-$/g, '');
+	return str.trim().replace(/\W+/g, '-').replace(/^-|-$/g, '');
 }
 
-export async function loader() {
-	const artists = await getArtists();
+export async function loader({ params }: { params: { genre: string } }) {
+	const artists = await getArtists({ genres: [params.genre] });
 
 	return artists;
 }
 
-export const meta: V2_MetaFunction = ({ params }) => {
+export const meta: V2_MetaFunction = () => {
 	return [
-		{ title: `Genre: ${params.genre} · Tigris Data + Remix` },
+		{ title: 'Music Picker · Tigris Data + Remix' },
 		{ tagName: 'link', rel: 'stylesheet', href: styles },
 	];
 };
 
 export default function Index() {
-	const [expanded, setExpanded] = useState(false);
 	const { genres, artists } = useLoaderData();
-
-	const genreFilters = expanded ? genres : genres.slice(0, 10);
 
 	return (
 		<>
 			<h1>Musical Artists</h1>
-			{genreFilters.length > 0 ? (
+			{genres.length > 0 ? (
 				<nav className="genre-filters">
-					{genreFilters.map((genre: any) => {
+					<a href="/">show all</a>
+					{genres.map((genre: any) => {
 						return (
 							<a key={genre.value} href={`/genre/${slugify(genre.value)}`}>
 								{genre.value} ({genre.count})
 							</a>
 						);
 					})}
-					{expanded ? (
-						<button onClick={() => setExpanded(false)}>
-							show fewer genres
-						</button>
-					) : (
-						<button onClick={() => setExpanded(true)}>show all genres</button>
-					)}
 				</nav>
 			) : null}
 			<div className="wrapper">

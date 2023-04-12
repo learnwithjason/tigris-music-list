@@ -1,23 +1,44 @@
 import { Tigris } from '@tigrisdata/core';
 import type { SearchQuery } from '@tigrisdata/core/dist/search';
+import { FacetQueryFieldType } from '@tigrisdata/core/dist/search';
 import type { Artist } from './models/artists';
 
-export async function getArtists() {
+type GetArtistsArgs = { genres?: string[]; q?: string };
+
+export async function getArtists(
+	{ genres, q }: GetArtistsArgs = { genres: [], q: '' },
+) {
 	const client = new Tigris();
 	const db = client.getDatabase();
 	const artists = db.getCollection<Artist>('artists');
 
 	const query: SearchQuery<Artist> = {
-		q: 'hip hop',
+		q,
+		hitsPerPage: 100,
 		searchFields: ['name', 'genres'],
-		facets: ['genres'],
+		filter: {
+			genres,
+		},
+		sort: { field: 'name', order: '$asc' },
+		facets: {
+			genres: {
+				size: 100,
+				type: FacetQueryFieldType.VALUE,
+			},
+		},
 	};
 
-	const results = await artists.search(query);
+	try {
+		const results = await artists.search(query);
+		const arr = await results.toArray();
 
-	for await (const result of results) {
-		console.log(JSON.stringify(result, null, 2));
+		return {
+			genres: arr[0].facets.genres.counts.filter((g) => g.count > 1),
+			artists: arr[0].hits,
+		};
+	} catch (err) {
+		console.error(err);
+
+		return { genres: [], artists: [] };
 	}
-
-	return results;
 }

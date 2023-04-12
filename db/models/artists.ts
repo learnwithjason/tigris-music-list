@@ -22,7 +22,7 @@ export class Artist {
 	@PrimaryKey({ order: 1, autoGenerate: true })
 	id?: string;
 
-	@SearchField()
+	@SearchField({ sort: true })
 	@Field()
 	name!: string;
 
