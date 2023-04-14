@@ -13,11 +13,14 @@ body {
 	margin: 0;
 }
 
+header {
+	padding: 0 max(5%, calc((100% - 1250px) / 2));
+}
+
 .wrapper {
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(auto-fit, calc((1250px - 5rem) / 6));
-	justify-content: center;
 	padding: 0 max(5%, calc((100% - 1250px) / 2));
 }
 
@@ -39,7 +42,7 @@ body {
 	text-decoration: none;
 }
 
-.genre-filters button {
+.genre-filters .control {
 	background: transparent;
 	border: 1px solid hsl(300deg 30% 94% / 1);
 	border-radius: 0.125rem;
