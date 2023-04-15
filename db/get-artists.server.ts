@@ -3,17 +3,14 @@ import type { SearchQuery } from '@tigrisdata/core/dist/search';
 import { FacetQueryFieldType } from '@tigrisdata/core/dist/search';
 import type { Artist } from './models/artists';
 
-type GetArtistsArgs = { genres?: string[]; q?: string };
+type GetArtistsArgs = { genres?: string[] };
 
-export async function getArtists(
-	{ genres, q }: GetArtistsArgs = { genres: [], q: '' },
-) {
+export async function getArtists({ genres }: GetArtistsArgs = { genres: [] }) {
 	const client = new Tigris();
 	const db = client.getDatabase();
 	const artists = db.getCollection<Artist>('artists');
 
 	const query: SearchQuery<Artist> = {
-		q,
 		hitsPerPage: 100,
 		searchFields: ['name', 'genres'],
 		filter: {

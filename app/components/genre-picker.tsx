@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react';
 import { useState } from 'react';
 
 export const GenrePicker = ({
@@ -34,16 +35,20 @@ export const GenrePicker = ({
 	return (
 		<nav className="genre-filters">
 			{clearable ? (
-				<a href="/" className="control">
+				<Link to="/" className="control" prefetch="intent">
 					&times; clear filters
-				</a>
+				</Link>
 			) : null}
 
 			{visibleGenres.map((genre: any) => {
 				return (
-					<a key={genre.value} href={`/genre/${genre.value}`}>
+					<Link
+						key={genre.value}
+						to={`/genre/${genre.value}`}
+						prefetch="intent"
+					>
 						{genre.value} ({genre.count})
-					</a>
+					</Link>
 				);
 			})}
 
