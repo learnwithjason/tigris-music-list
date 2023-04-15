@@ -1,0 +1,105 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+		Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	font-size: 18px;
+	line-height: 1.45;
+}
+
+body {
+	margin: 0;
+}
+
+header {
+	padding: 0 max(5%, calc((100% - 1250px) / 2));
+}
+
+.wrapper {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, calc((1250px - 5rem) / 6));
+	padding: 0 max(5%, calc((100% - 1250px) / 2));
+}
+
+.genre-filters {
+	display: flex;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+	margin: 0 0 2rem;
+	padding: 0 max(5%, calc((100% - 1250px) / 2));
+}
+
+.genre-filters a {
+	background: hsl(300deg 60% 94% / 0.9);
+	border: 0;
+	border-radius: 0.125rem;
+	color: inherit;
+	font-size: 0.75rem;
+	padding: 0.25rem;
+	text-decoration: none;
+}
+
+.genre-filters .control {
+	background: transparent;
+	border: 1px solid hsl(300deg 30% 94% / 1);
+	border-radius: 0.125rem;
+	color: hsl(300deg 20% 44% / 1);
+	font-size: 0.75rem;
+	padding: 0.25rem;
+}
+
+.artist {
+	aspect-ratio: 1;
+	border: 1px solid hsl(300deg 30% 94% / 1);
+	border-radius: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	overflow: hidden;
+	position: relative;
+	transition: all 100ms ease-out;
+	transform-origin: center;
+	z-index: 1;
+}
+
+.artist:is(:hover, :focus-within) {
+	box-shadow: 0 0.25rem 1rem hsl(300deg 20% 54% / 0.7);
+	transform: scale(1.2);
+	z-index: 10;
+}
+
+.details {
+	background: hsl(300deg 60% 94% / 0.9);
+	opacity: 0.75;
+	padding: 0.5rem;
+	position: relative;
+	transition: 100ms all linear;
+	z-index: 5;
+}
+
+.artist:is(:hover, :focus-within) .details {
+	opacity: 1;
+}
+
+.artist h2 {
+	font-size: 0.875rem;
+	line-height: 1.1;
+	margin: 0;
+}
+
+.artist img {
+	aspect-ratio: 1;
+	inset: 0;
+	object-fit: cover;
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+}
+
+.artist p {
+	font-size: 0.75rem;
+	margin: 0;
+}
