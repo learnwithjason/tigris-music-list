@@ -1,4 +1,4 @@
-import { V2_MetaFunction } from '@remix-run/react';
+import type { V2_MetaFunction } from '@remix-run/react';
 import type { LoaderArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getArtists } from 'db/get-artists.server';
