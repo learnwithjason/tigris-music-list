@@ -6,25 +6,28 @@ import styles from '../styles/main.css';
 import { GenrePicker } from '~/components/genre-picker';
 import { ArtistList } from '~/components/artist-list';
 import { Layout } from '~/components/layout';
+import { SearchInput } from '~/components/search-input';
 
 export const meta: V2_MetaFunction = ({ params }) => {
-	return [
-		{ title: `Genre: ${params.genre} · Tigris Data + Remix` },
-		{ tagName: 'link', rel: 'stylesheet', href: styles },
-	];
+  return [
+    { title: `Genre: ${params.genre} · Tigris Data + Remix` },
+    { tagName: 'link', rel: 'stylesheet', href: styles },
+  ];
 };
 
 export { loader } from './_index';
 
 export default function Index() {
-	const { genre } = useParams();
-	const data = useLoaderData<typeof loader>();
+  const { genre } = useParams();
+  const data = useLoaderData<typeof loader>();
 
-	return (
-		<Layout title={`Genre: ${genre}`}>
-			<GenrePicker genres={data.genres} clearable={true} />
+  return (
+    <Layout title={`Genre: ${genre}`}>
+      <SearchInput />
 
-			<ArtistList />
-		</Layout>
-	);
+      <GenrePicker genres={data.genres} clearable={true} />
+
+      <ArtistList />
+    </Layout>
+  );
 }
