@@ -1,11 +1,20 @@
-import type { loader } from '~/routes/genre.$genre';
+import type { loader } from '~/routes/_index';
+
 import { useLoaderData } from '@remix-run/react';
 
 export const ArtistList = () => {
 	const { artists } = useLoaderData<typeof loader>();
 
+	if (artists.length < 1) {
+		return (
+			<div className="artist-list empty">
+				<p>no artists match the current filters</p>
+			</div>
+		);
+	}
+
 	return (
-		<div className="wrapper">
+		<div className="artist-list">
 			{artists.map((artist) => {
 				return (
 					<div className="artist" key={artist.document.id}>
