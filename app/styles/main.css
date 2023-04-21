@@ -13,23 +13,66 @@ body {
 	margin: 0;
 }
 
-header {
-	padding: 0 max(5%, calc((100% - 1250px) / 2));
-}
-
-.wrapper {
+header,
+main {
+	align-items: start;
 	display: grid;
-	gap: 1rem;
-	grid-template-columns: repeat(auto-fit, calc((1250px - 5rem) / 6));
+	gap: 1rem 2rem;
+	grid-template-columns: 180px 1fr;
+	margin: 0 0 2rem;
 	padding: 0 max(5%, calc((100% - 1250px) / 2));
 }
 
+header {
+	padding-block-start: 2rem;
+}
+
+.logo {
+	display: block;
+	font-size: 3.5rem;
+	line-height: 1;
+	text-align: right;
+}
+
+.masthead :is(h1, p) {
+	margin: 0;
+}
+
+.search,
 .genre-filters {
 	display: flex;
 	gap: 0.5rem;
+	flex-direction: column;
 	flex-wrap: wrap;
-	margin: 0 0 2rem;
-	padding: 0 max(5%, calc((100% - 1250px) / 2));
+	font-size: 0.75rem;
+	margin: 0;
+}
+
+.search {
+	grid-column-start: 2;
+}
+
+.search-details {
+	align-items: baseline;
+	background: hsl(300deg 60% 94% / 0.9);
+	border: 0;
+	border-radius: 0.125rem;
+	display: flex;
+	gap: 1rem;
+	padding: 0.5rem 0.75rem;
+}
+
+.search form {
+	display: flex;
+	gap: 1rem;
+}
+
+.search :is(input, button) {
+	font-size: 16px;
+}
+
+.genre-filters {
+	justify-content: flex-end;
 }
 
 .genre-filters a {
@@ -37,9 +80,23 @@ header {
 	border: 0;
 	border-radius: 0.125rem;
 	color: inherit;
-	font-size: 0.75rem;
 	padding: 0.25rem;
+	text-align: right;
 	text-decoration: none;
+}
+
+.genre-filter.selected {
+	background: hsl(300deg 70% 44% / 0.9);
+	color: white;
+}
+
+.genre-label {
+	display: inline-block;
+	max-width: calc(100% - 22px);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: bottom;
+	white-space: nowrap;
 }
 
 .genre-filters .control {
@@ -49,6 +106,23 @@ header {
 	color: hsl(300deg 20% 44% / 1);
 	font-size: 0.75rem;
 	padding: 0.25rem;
+}
+
+.artist-list {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, calc((1250px - 5rem) / 6));
+}
+
+.artist-list.empty {
+	grid-template-columns: 1fr;
+	justify-content: center;
+}
+
+.artist-list.empty p {
+	font-style: italic;
+	text-align: center;
+	padding: 3rem 0;
 }
 
 .artist {
@@ -102,4 +176,14 @@ header {
 .artist p {
 	font-size: 0.75rem;
 	margin: 0;
+}
+
+footer {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.75rem;
+	gap: 1rem;
+	justify-content: center;
+	margin: 2rem auto;
+	max-width: 90%;
 }
