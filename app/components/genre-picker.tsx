@@ -1,26 +1,27 @@
-import { Link } from '@remix-run/react';
+import type { loader } from '~/routes/_index';
+
+import { Link, useLoaderData, useLocation, useParams } from '@remix-run/react';
 import { useState } from 'react';
+import { getGenreFromParams } from '~/utils';
 
 export const GenrePicker = ({
-	genres,
 	expandable = false,
 	clearable = false,
 }: {
-	genres: { value: string; count: number }[];
 	expandable?: boolean;
 	clearable?: boolean;
 }) => {
+	const location = useLocation();
+	const { genres } = useLoaderData<typeof loader>();
+	const params = useParams();
+	const selectedGenre = getGenreFromParams(params);
 	const [expanded, setExpanded] = useState(false);
 
-	if (genres.length < 1) {
-		return null;
-	}
-
-	const visibleGenres = expanded ? genres : genres.slice(0, 10);
+	const visibleGenres = expandable && expanded ? genres : genres.slice(0, 10);
 
 	let expanderButton = null;
 
-	if (expandable) {
+	if (expandable && genres.length > 10) {
 		expanderButton = expanded ? (
 			<button onClick={() => setExpanded(false)} className="control">
 				show fewer genres
@@ -35,7 +36,7 @@ export const GenrePicker = ({
 	return (
 		<nav className="genre-filters">
 			{clearable ? (
-				<Link to="/" className="control" prefetch="intent">
+				<Link to={`/${location.search}`} className="control" prefetch="intent">
 					&times; clear filters
 				</Link>
 			) : null}
@@ -45,9 +46,17 @@ export const GenrePicker = ({
 					<Link
 						key={genre.value}
 						to={`/genre/${genre.value}`}
+						className={
+							genre.value === selectedGenre
+								? 'genre-filter selected'
+								: 'genre-filter'
+						}
 						prefetch="intent"
 					>
-						{genre.value} ({genre.count})
+						<span className="genre-label" title={genre.value}>
+							{genre.value}
+						</span>{' '}
+						({genre.count})
 					</Link>
 				);
 			})}
