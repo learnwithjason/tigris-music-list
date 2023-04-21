@@ -1,15 +1,19 @@
-import { Tigris } from '@tigrisdata/core';
 import type { SearchQuery } from '@tigrisdata/core/dist/search';
 import type { Artist } from './models/artists';
 
-type GetArtistsArgs = { genres?: string[] };
+import { Tigris } from '@tigrisdata/core';
 
-export async function getArtists({ genres }: GetArtistsArgs = { genres: [] }) {
+type GetArtistsArgs = { genres?: string[]; q?: string };
+
+export async function getArtists(
+	{ genres, q }: GetArtistsArgs = { genres: [], q: '' },
+) {
 	const client = new Tigris();
 	const db = client.getDatabase();
 	const artists = db.getCollection<Artist>('artists');
 
 	const query: SearchQuery<Artist> = {
+		q,
 		hitsPerPage: 100,
 		searchFields: ['name', 'genres'],
 		filter: {
@@ -27,8 +31,14 @@ export async function getArtists({ genres }: GetArtistsArgs = { genres: [] }) {
 		const results = await artists.search(query);
 		const arr = await results.toArray();
 
+		// in longer lists, only show genres referring to 2+ artists to save space
+		let genres = arr[0].facets.genres.counts;
+		if (genres.length > 50) {
+			genres = genres.filter((g) => g.count > 1);
+		}
+
 		return {
-			genres: arr[0].facets.genres.counts.filter((g) => g.count > 1),
+			genres,
 			artists: arr[0].hits,
 		};
 	} catch (err) {
