@@ -7,13 +7,12 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useParams,
 } from '@remix-run/react';
-import { getGenreFromParams } from '~/utils';
 import styles from '~/styles/main.css';
 
 export const meta: V2_MetaFunction = ({ params }) => {
-	const genre = getGenreFromParams(params);
+	// TODO: determine the current genre based on the URL params
+	const genre = undefined;
 
 	const title = genre
 		? `Genre: ${genre} · Tigris Data + Remix`
@@ -23,8 +22,8 @@ export const meta: V2_MetaFunction = ({ params }) => {
 };
 
 export default function Root() {
-	const params = useParams();
-	const genre = getGenreFromParams(params);
+	// TODO get the genre from the URL params
+	const genre = undefined;
 
 	const title = genre ? `Genre: ${genre}` : 'Music Picker';
 

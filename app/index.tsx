@@ -1,25 +1,11 @@
-import type { LoaderArgs } from '@remix-run/node';
-
-import { useParams } from '@remix-run/react';
-import { getArtists } from '~/db/get-artists.server';
-import { getGenreFromParams } from '~/utils';
 import { GenrePicker } from '~/components/genre-picker';
 import { ArtistList } from '~/components/artist-list';
 import { Search } from '~/components/search';
 
-export async function loader({ request, params }: LoaderArgs) {
-	const url = new URL(request.url);
-	const q = url.searchParams.get('q') || undefined;
-	const genre = getGenreFromParams(params);
-	const genres = genre ? [genre] : undefined;
-	const data = await getArtists({ genres, q });
-
-	return data;
-}
+// TODO export a loader that returns all artist and genre data
 
 export default function Index() {
-	const params = useParams();
-	const genre = getGenreFromParams(params);
+	const genre = undefined;
 
 	return (
 		<>

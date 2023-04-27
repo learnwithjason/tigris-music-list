@@ -1,8 +1,4 @@
-import type { loader } from '~/index';
-
-import { Link, useLoaderData, useLocation, useParams } from '@remix-run/react';
-import { useState } from 'react';
-import { getGenreFromParams } from '~/utils';
+import { Link } from '@remix-run/react';
 
 export const GenrePicker = ({
 	expandable = false,
@@ -11,41 +7,32 @@ export const GenrePicker = ({
 	expandable?: boolean;
 	clearable?: boolean;
 }) => {
-	const location = useLocation();
-	const { genres } = useLoaderData<typeof loader>();
-	const params = useParams();
-	const selectedGenre = getGenreFromParams(params);
-	const [expanded, setExpanded] = useState(false);
+	// TODO preserve search query while navigating genres
 
-	const visibleGenres = expandable && expanded ? genres : genres.slice(0, 10);
+	// TODO get current genre from URL params
+	const selectedGenre = undefined;
 
-	let expanderButton = null;
-
-	if (expandable && genres.length > 10) {
-		expanderButton = expanded ? (
-			<button onClick={() => setExpanded(false)} className="control">
-				show fewer genres
-			</button>
-		) : (
-			<button onClick={() => setExpanded(true)} className="control">
-				show all genres
-			</button>
-		);
-	}
+	// TODO get genre data from Tigris
+	const visibleGenres = [
+		{
+			value: 'hip hop',
+			count: 2,
+		},
+		{
+			value: 'indie rock',
+			count: 1,
+		},
+	];
 
 	return (
 		<nav className="genre-filters">
-			{clearable ? (
-				<Link to={`/${location.search}`} className="control" prefetch="intent">
-					&times; clear filters
-				</Link>
-			) : null}
+			{/* TODO add support for clearing selected genre */}
 
 			{visibleGenres.map((genre: any) => {
 				return (
 					<Link
 						key={genre.value}
-						to={`/genre/${genre.value}${location.search}`}
+						to={`/genre/${genre.value}`}
 						className={
 							genre.value === selectedGenre
 								? 'genre-filter selected'
@@ -61,7 +48,7 @@ export const GenrePicker = ({
 				);
 			})}
 
-			{expanderButton}
+			{/* TODO add support for expanding / collapsing genre list when it’s long */}
 		</nav>
 	);
 };
