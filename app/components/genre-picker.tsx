@@ -45,7 +45,7 @@ export const GenrePicker = ({
 				return (
 					<Link
 						key={genre.value}
-						to={`/genre/${genre.value}`}
+						to={`/genre/${genre.value}${location.search}`}
 						className={
 							genre.value === selectedGenre
 								? 'genre-filter selected'
