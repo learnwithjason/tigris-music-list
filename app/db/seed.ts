@@ -1,7 +1,8 @@
+import type { Artist } from '~/db/models/artists';
+
 import { z } from 'zod';
 import { Tigris } from '@tigrisdata/core';
-import artists from './data/artists.json';
-import type { Artist } from './models/artists';
+import artists from '~/db/data/artists.json';
 
 const tigrisClient = new Tigris();
 const db = tigrisClient.getDatabase();
@@ -17,7 +18,7 @@ const ArtistSchema = z.object({
 			url: z.string().url(),
 			height: z.number(),
 			width: z.number(),
-		}),
+		})
 	),
 });
 

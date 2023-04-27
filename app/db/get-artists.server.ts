@@ -1,12 +1,12 @@
 import type { SearchQuery } from '@tigrisdata/core/dist/search';
-import type { Artist } from './models/artists';
+import type { Artist } from '~/db/models/artists';
 
 import { Tigris } from '@tigrisdata/core';
 
 type GetArtistsArgs = { genres?: string[]; q?: string };
 
 export async function getArtists(
-	{ genres, q }: GetArtistsArgs = { genres: [], q: '' },
+	{ genres, q }: GetArtistsArgs = { genres: [], q: '' }
 ) {
 	const client = new Tigris();
 	const db = client.getDatabase();
