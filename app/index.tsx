@@ -1,7 +1,7 @@
 import type { LoaderArgs } from '@remix-run/node';
 
 import { useParams } from '@remix-run/react';
-import { getArtists } from 'db/get-artists.server';
+import { getArtists } from '~/db/get-artists.server';
 import { getGenreFromParams } from '~/utils';
 import { GenrePicker } from '~/components/genre-picker';
 import { ArtistList } from '~/components/artist-list';

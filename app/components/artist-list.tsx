@@ -1,4 +1,4 @@
-import type { loader } from '~/routes/_index';
+import type { loader } from '~/index';
 
 import { useLoaderData } from '@remix-run/react';
 
