@@ -7,7 +7,7 @@
 		"dev": "remix dev",
 		"start": "remix-serve build",
 		"typecheck": "tsc",
-		"db:setup": "npx ts-node db/setup.ts",
+		"db:setup": "npx ts-node app/db/setup.ts",
 		"predev": "npm run db:setup",
 		"predeploy": "npm run db:setup"
 	},
