@@ -1,8 +1,8 @@
-import type { Artist } from '~/db/models/artists';
+import type { Artist } from './models/artists';
 
 import { z } from 'zod';
 import { Tigris } from '@tigrisdata/core';
-import artists from '~/db/data/artists.json';
+import artists from './data/artists.json';
 
 const tigrisClient = new Tigris();
 const db = tigrisClient.getDatabase();

@@ -1,5 +1,5 @@
 import { Tigris } from '@tigrisdata/core';
-import { Artist } from '~/db/models/artists';
+import { Artist } from './models/artists';
 
 async function main() {
 	const tigrisClient = new Tigris();
