@@ -4,7 +4,6 @@ import { useState } from 'react';
 export const GenrePicker = () => {
 	const location = useLocation();
 	const [expanded, setExpanded] = useState(false);
-	// TODO preserve search query while navigating genres
 	// TODO get current genre from URL params
 	const selectedGenre = undefined;
 	const genres = [
