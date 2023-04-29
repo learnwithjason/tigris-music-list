@@ -1,19 +1,13 @@
-import { Link } from '@remix-run/react';
+import { Link, useLocation } from '@remix-run/react';
+import { useState } from 'react';
 
-export const GenrePicker = ({
-	expandable = false,
-	clearable = false,
-}: {
-	expandable?: boolean;
-	clearable?: boolean;
-}) => {
+export const GenrePicker = () => {
+	const location = useLocation();
+	const [expanded, setExpanded] = useState(false);
 	// TODO preserve search query while navigating genres
-
 	// TODO get current genre from URL params
 	const selectedGenre = undefined;
-
-	// TODO get genre data from Tigris
-	const visibleGenres = [
+	const genres = [
 		{
 			value: 'hip hop',
 			count: 2,
@@ -24,15 +18,36 @@ export const GenrePicker = ({
 		},
 	];
 
+	const visibleGenres =
+		genres.length > 10 && !expanded ? genres.slice(0, 10) : genres;
+
+	let expanderButton = null;
+
+	if (genres.length > 10) {
+		expanderButton = expanded ? (
+			<button onClick={() => setExpanded(false)} className="control">
+				show fewer genres
+			</button>
+		) : (
+			<button onClick={() => setExpanded(true)} className="control">
+				show all genres
+			</button>
+		);
+	}
+
 	return (
 		<nav className="genre-filters">
-			{/* TODO add support for clearing selected genre */}
+			{selectedGenre ? (
+				<Link to={`/${location.search}`} className="control" prefetch="intent">
+					&times; clear filters
+				</Link>
+			) : null}
 
 			{visibleGenres.map((genre: any) => {
 				return (
 					<Link
 						key={genre.value}
-						to={`/genre/${genre.value}`}
+						to={`/genre/${genre.value}${location.search}`}
 						className={
 							genre.value === selectedGenre
 								? 'genre-filter selected'
@@ -48,7 +63,7 @@ export const GenrePicker = ({
 				);
 			})}
 
-			{/* TODO add support for expanding / collapsing genre list when it’s long */}
+			{expanderButton}
 		</nav>
 	);
 };
