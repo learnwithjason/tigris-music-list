@@ -10,8 +10,7 @@ import { Search } from '~/components/search';
 export async function loader({ request, params }: LoaderArgs) {
 	const url = new URL(request.url);
 	const q = url.searchParams.get('q') || undefined;
-	const genre = getGenreFromParams(params);
-	const genres = genre ? [genre] : undefined;
+	const genres = getGenreFromParams(params);
 	const data = await getArtists({ genres, q });
 
 	return data;

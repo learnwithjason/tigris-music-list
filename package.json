@@ -15,7 +15,7 @@
 		"@remix-run/node": "^1.5.1",
 		"@remix-run/react": "^1.5.1",
 		"@remix-run/serve": "^1.5.1",
-		"@tigrisdata/core": "^1.0.0-beta.44",
+		"@tigrisdata/core": "^1.2.3",
 		"isbot": "^3.6.5",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
