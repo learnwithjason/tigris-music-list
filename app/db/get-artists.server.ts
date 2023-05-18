@@ -3,10 +3,10 @@ import type { Artist } from '~/db/models/artists';
 
 import { Tigris } from '@tigrisdata/core';
 
-type GetArtistsArgs = { genres?: string[]; q?: string };
+type GetArtistsArgs = { genres?: string; q?: string };
 
 export async function getArtists(
-	{ genres, q }: GetArtistsArgs = { genres: [], q: '' }
+	{ genres, q }: GetArtistsArgs = { genres: '', q: '' }
 ) {
 	const client = new Tigris();
 	const db = client.getDatabase();
@@ -16,9 +16,7 @@ export async function getArtists(
 		q,
 		hitsPerPage: 100,
 		searchFields: ['name', 'genres'],
-		filter: {
-			genres,
-		},
+		filter: genres ? { genres } : {},
 		sort: { field: 'name', order: '$asc' },
 		facets: {
 			genres: {
@@ -28,7 +26,7 @@ export async function getArtists(
 	};
 
 	try {
-		const results = await artists.search(query);
+		const results = artists.search(query);
 		const arr = await results.toArray();
 
 		// in longer lists, only show genres referring to 2+ artists to save space
